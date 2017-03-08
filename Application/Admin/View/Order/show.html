@@ -1,0 +1,141 @@
+<extend name="Public/base"/>
+
+
+<block name="body">
+
+    <link rel="stylesheet" href="__PUBLIC__/mall/css/shoporder.css">
+    <div class="con_info">
+        <h3>填写并核对订单信息</h3>
+        <div class="con_address">
+            <div class="con_add_detail">
+                <if condition="$data['pay_status'] neq 0">
+                <p class="con_add_title">收货人信息</p>
+                <p class="con_add_add">{$data_detail['detail']['username']} {$data_detail['detail']['phone']} {$data_detail['detail']['province_name']}
+                    {$data_detail['detail']['city_name']} {$data_detail['detail']['district_name']}
+                    {$data_detail['detail']['address']}</p>
+                </if>
+            </div>
+        </div>
+        <div class="con_shop_list">
+            <h4>订单信息<if condition="$data['pay_status'] eq 0"><span style="color: #ff0000;">(以支付时订单信息为准)</span></if></h4>
+            <h5>订单号：{$data['order_code']}  订单状态：{$data['pay_status_name']}</h5>
+            <div class="con_shop_head">
+                <div class="shop_h_title">商品</div>
+                <div class="shop_h_num">数量</div>
+                <div class="shop_h_total">小计</div>
+            </div>
+            <volist name="data.goods_datail" id="goods">
+            <div class="shop_sec_info clear ">
+                <div class="shop_sec_mes clear">
+                    <div class="shop_sec_pic">
+                        <img src="{$goods['thumb']}" width="300px;">
+                    </div>
+                </div>
+                <div class="shop_sec_txt">
+                    <p>{$goods['title']}</p>
+                </div>
+                <div class="shop_sec_num">
+                    {$goods['num']}
+                </div>
+                <div class="shop_sec_total">
+                    ￥{$goods['goods_price']}
+                </div>
+            </div>
+            </volist>
+            <volist name="data.package" id="goods">
+                <div class="shop_sec_info clear ">
+                    <div class="shop_sec_mes clear">
+                        <div class="shop_sec_pic">
+                            <img src="{$goods['thumb']}" width="300px">
+                        </div>
+                    </div>
+                    <div class="shop_sec_txt">
+                        <p>{$goods['name']}</p>
+                    </div>
+                    <div class="shop_sec_num">
+                        {$goods['num']}
+                    </div>
+                    <div class="shop_sec_total">
+                        ￥{$goods['goods_price']}
+                    </div>
+                </div>
+            </volist>
+            <div class="con_shop_foot">
+                <p>实付金额：￥{$data['total']}</p>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-return" onclick="javascript:history.back(-1);return false;" style="margin: auto 20px;">返 回</button>
+
+
+    <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+
+</block>
+
+<block name="script">
+
+    <script type="text/javascript">
+        //上传图片
+        /* 初始化上传插件 */
+        $("#upload_picture").uploadify({
+            "height": 30,
+            "swf": "__STATIC__/uploadify/uploadify.swf",
+            "fileObjName": "download",
+            "buttonText": "上传图片",
+            "uploader": "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+            "width": 120,
+            'removeTimeout': 1,
+            'fileTypeExts': '*.jpg; *.png; *.gif;',
+            "onUploadSuccess": uploadPicture,
+            'onFallback': function () {
+                alert('未检测到兼容版本的Flash.');
+            }
+        });
+        function uploadPicture(file, data) {
+            var data = $.parseJSON(data);
+            var src = '';
+            if (data.status) {
+                $("#icon").val(data.id);
+                src = data.url || '__ROOT__' + data.path;
+                $("#icon").parent().find('.upload-img-box').html(
+                        '<div class="upload-pre-item"><img src="' + src + '"/><input type="hidden" name="thumb" value="' + src + '"/></div>'
+                );
+            } else {
+                updateAlert(data.info);
+                setTimeout(function () {
+                    $('#top-alert').find('button').click();
+                    $(that).removeClass('disabled').prop('disabled', false);
+                }, 1500);
+            }
+        }
+
+        $('.radio').change(function () {
+            if ($("input[type='radio']:checked").val() == 1) {
+                $(".hide").show('10000');
+            } else {
+                $(".hide").hide('10000');
+            }
+        });
+
+
+        Think.setValue("is_package", {$goods.0.is_package |default = 0
+        })
+        ;
+        Think.setValue("package_id", {$goods.0.package_id |default = 0
+        })
+        ;
+        Think.setValue("class_id", {$goods.0.class_id |default = 0
+        })
+        ;
+        Think.setValue("top", {$goods.0.top |default = 0
+        })
+        ;
+
+        //导航高亮
+        highlight_subnav('{:U('
+        index
+        ')}'
+        )
+        ;
+    </script>
+</block>

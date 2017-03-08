@@ -1,0 +1,225 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+    <div class="main-title">
+        <h2>新增商品信息</h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+
+        <section>
+            <div class="container">
+                <div class="con_info">
+                    <div class="con_1">
+                        <p>商品主信息</p>
+                        <div class="con_one">
+                            <div class="con_item">
+                                <label>*商品名称：</label>
+                                <div class="con_in">
+                                    <input type="text" class="text input-large" name="title" value="{$info.name|default=''}">
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*分类图标：</label>
+                                <div class="con_in con_special">
+                                    <input type="file" id="upload_picture">
+                                    <input type="hidden" name="icon" id="icon" value="{$info['icon']|default=''}"/>
+                                    <div class="upload-img-box" style="min-height: 79px;width: 40%;">
+                                        <notempty name="info['icon']">
+                                            <div class="upload-pre-item"><img src="__ROOT__{$info.icon|get_cover='path'}"/></div>
+                                        </notempty>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*单价：</label>
+                                <div class="con_in">
+                                    <input type="text" class="text input-large" name="unit_price" value="">
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*套餐：</label>
+                                <div class="con_in">
+                                    <label class="inline radio"><input type="radio" name="is_package" style="width: 30px;" value="0" checked="true">不是套餐</label>
+                                    <label class="inline radio"><input type="radio" name="is_package" style="width: 30px;" value="1">是套餐</label>
+                                </div>
+                            </div>
+                            <div class="con_item hide">
+                                <label>*所属套餐：</label>
+                                <div class="con_in">
+                                    <select name="package_id">
+                                        <volist name="package" id="package">
+                                            <option value="{$package.id}">{$package.name}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="con_item hide">
+                                <label>*套餐价格<span class="check-tips">（所属套餐里面对应的价格）</span>：</label>
+                                <div class="con_in">
+                                    <input type="text" class="text input-large" name="package_price" value="">
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*所属分类<span class="check-tips">（所属的分类必须是最底层分类）</span>：</label>
+                                <div class="con_in">
+                                    <select name="class_id">
+                                        <volist name="Menus" id="menu">
+                                            <option value="{$menu.id}">{$menu.title_show}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*商品推荐<span class="check-tips"></span>：</label>
+                                <div class="con_in">
+                                    <label class="inline radio"><input type="radio" name="top" style="width: 30px;" value="0" checked="true">不推荐</label>
+                                    <label class="inline radio"><input type="radio" name="top" style="width: 30px;" value="1">推荐</label>
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*商品图片<span class="check-tips">（最多五张,最小图片比列：350*350）</span>：</label>
+                                <div class="con_in">
+                                    {:hook('UploadImages')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="con_1">
+                        <p>商品附属信息</p>
+                        <div class="con_one">
+                            <div class="con_item">
+                                <label>*商品名称：</label>
+                                <div class="con_in">
+                                    <input type="text" class="text input-large" name="commodity_name" value="">
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*品牌：</label>
+                                <div class="con_in">
+                                    <input type="text" class="text input-large" name="brand" value="">
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*商品净含量：</label>
+                                <div class="con_in">
+                                    <input type="text" class="text input-large" name="net_content" value="">
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*商品产地：</label>
+                                <div class="con_in">
+                                    <input type="text" class="text input-large" name="origin" value="">
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*商品类型：</label>
+                                <div class="con_in">
+                                    <input type="text" class="text input-large" name="type" value="">
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*商品规格：</label>
+                                <div class="con_in">
+                                    <input type="text" class="text input-large" name="specifications" value="">
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*香型：</label>
+                                <div class="con_in">
+                                    <input type="text" class="text input-large" name="flavor" value="">
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*售后保障：</label>
+                                <div class="con_in">
+                                    <label class="textarea" style="width: 500px;">
+                                        <textarea name="describe" style="height: 265px"></textarea>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*商品介绍：</label>
+                                <div class="con_in">
+                                    <label class="textarea" style="width: 500px;">
+                                        <textarea name="introduce"></textarea>
+                                        {:hook('adminArticleEdit', array('name'=>'introduce','value'=>''))}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="con_item">
+                                <label>*商品库存：</label>
+                                <div class="con_in">
+                                    <input type="text" class="text input-large" name="goods_num" value="">
+                                </div>
+                            </div>
+
+                            <div class="con_item">
+                                <div class="form-item">
+                                    <input type="hidden" name="id" value="{$info.id|default=''}">
+                                    <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定
+                                    </button>
+                                    <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </form>
+</block>
+
+<block name="script">
+
+    <script type="text/javascript">
+        //上传图片
+        /* 初始化上传插件 */
+        $("#upload_picture").uploadify({
+            "height": 30,
+            "swf": "__STATIC__/uploadify/uploadify.swf",
+            "fileObjName": "download",
+            "buttonText": "上传图片",
+            "uploader": "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+            "width": 120,
+            'removeTimeout': 1,
+            'fileTypeExts': '*.jpg; *.png; *.gif;',
+            "onUploadSuccess": uploadPicture,
+            'onFallback': function () {
+                alert('未检测到兼容版本的Flash.');
+            }
+        });
+        function uploadPicture(file, data) {
+            var data = $.parseJSON(data);
+            var src = '';
+            if (data.status) {
+                $("#icon").val(data.id);
+                src = data.url || '__ROOT__' + data.path;
+                $("#icon").parent().find('.upload-img-box').html(
+                        '<div class="upload-pre-item"><img src="' + src + '"/><input type="hidden" name="thumb" value="' + src + '"/></div>'
+                );
+            } else {
+                updateAlert(data.info);
+                setTimeout(function () {
+                    $('#top-alert').find('button').click();
+                    $(that).removeClass('disabled').prop('disabled', false);
+                }, 1500);
+            }
+        }
+
+        $('.radio').change(function () {
+            if ($("input[type='radio']:checked").val() == 1) {
+                $(".hide").show('10000');
+            } else {
+                $(".hide").hide('10000');
+            }
+        });
+
+        //导航高亮
+        highlight_subnav('{:U('index')}'
+        );
+    </script>
+</block>

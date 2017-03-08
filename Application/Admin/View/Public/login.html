@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<title>登录</title>
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<link rel="stylesheet" href="__PUBLIC__/mall/css/reset.css" />
+		<link href="__PUBLIC__/mall/css/bootstrap.css" rel="stylesheet">
+		<script src="__PUBLIC__/mall/js/jquery-1.11.3.js"></script>
+		
+		<style type="text/css">
+			body{
+				min-width:1000px;
+			}
+			.head{
+				width:100%;
+				height: 89px;
+    			border-bottom: 1px solid #2b9fd0;
+    			
+			}
+			.logo{
+				width:1200px;
+				height:90px;
+				line-height:90px;
+				margin:0 auto;
+				padding:0 50px;
+			}
+			section{
+				width:100%;
+				height:500px;
+				background:url(/Public/mall/images/pic18.jpg) no-repeat center;
+				/*background:url(img/bg.jpg) no-repeat center;*/
+				border:1px solid transparent;
+			}
+			.con{
+				width:960px;
+				margin:0 auto;
+			}
+			.dialog{
+				    background: #fff;
+				    padding: 16px 34px 37px;
+				    width: 350px;
+				    margin-top: 66px;
+				    float:right;
+				    margin-right:20px;
+			}
+			.on{
+				border-bottom:2px solid #2b9fd0;
+			}
+			.ul_head{
+				color:#2b9fd0;
+				font-size:20px;
+				height:72px;
+				line-height:70px;
+				border-bottom:1px solid #eee;
+			}
+			.ul_head li{
+				float:left;
+				text-align: center;
+				width:50%;
+				cursor:pointer
+			}
+			form{
+				margin-top:20px;
+			}
+			.form1{
+				display:none;
+			}
+			.xieyi{
+				text-align: center;
+				font-size:12px ;
+			}
+			footer{
+				text-align: center;
+			}
+			footer p{
+				padding:20px;
+				color:#9D9D9D;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="head">
+			<div class="logo">
+				<!-- <img src="/Public/mall/images/pic1.jpg"/> -->
+				这里是logo
+			</div>
+		</div>
+		<section>
+			<div class="con">
+				<div class="dialog">
+					<div class="login">
+						<ul class="ul_head clear">
+							<li class="on">用户登录</li>
+							<li>用户注册</li>
+						</ul>
+						<div class="content">
+							<form class="form0" action="{:U('login')}" method = "post">
+								<div class="form-group">
+									<input type="text" class="form-control" name = "username" placeholder="手机号码" required>
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control" name="password" placeholder="密码">
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox">自动登录
+									</label>
+									<a class="" style="float:right;" href="{:U('Public/forgetpassword')}">忘记密码？</a>
+								</div>
+								<div class="form-group">
+									<input class="btn btn-info btn-block" type="submit" value="登    录" />
+								</div>
+							</form>		
+							<form class="form1" action="{:U('register')}" method = "post">
+								<div class="form-group">
+									<input type="text" class="form-control" name = "username" placeholder="手机号码" required>
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control" name = "password" placeholder="密码" required>
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control"  name = "repassword" placeholder="确认密码" required>
+								</div>
+								<div class="form-group">享受更高服务？<a href="{:U('vipRegister')}">创客(Vip)注册</a></div>
+								
+								<div class="form-group">
+									<input class="btn btn-info btn-block" type="submit" value="注    册" />
+								</div>
+								<p class="xieyi">注册代表您已阅读并同意<a href="javascript:;">《注册协议》</a></p>
+
+							</form>		
+						
+						</div>				           
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer>
+			<p>Copyright  2016 超觉英语© 时代乐创信息技术（北京）有限公司 京ICP备13024171号-6</p>
+		</footer>
+		<script>
+			$(function(){
+				$('.ul_head li').click(function(){
+					var index=$(this).index();
+					$(this).addClass('on').siblings().removeClass('on');
+					$('.content form').eq(index).show().siblings().hide();
+				})
+
+			})
+		</script>
+	</body>
+</html>

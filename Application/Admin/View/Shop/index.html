@@ -1,0 +1,372 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{$meta_title}|产品详情页面</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/style.css" media="all">
+    <link rel="stylesheet" href="__PUBLIC__/mall/css/reset.css">
+    <link href="__PUBLIC__/mall/css/product.css" rel="Stylesheet"/>
+    <link href="__PUBLIC__/mall/css/product_right_detail.css" rel="Stylesheet"/>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <![endif]--><!--[if gte IE 9]><!-->
+    <!--<![endif]-->
+    <script type="text/javascript" src="__STATIC__/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.mousewheel.js"></script>
+    <style>
+        .hidden{
+            display:none;
+        }
+
+    </style>
+    <style>
+        .hidden{
+            display:none;
+        }
+
+    </style>
+</head>
+<body>
+<div class="head"></div>
+<!--固定的浮动栏-->
+
+<!-- 头部 -->
+<div class="header">
+    <!-- Logo -->
+    <span class="logo"></span>
+    <!-- /Logo -->
+
+    <!-- 主导航 -->
+    <ul class="main-nav">
+        <volist name="__MENU__.main" id="menu">
+            <li class="{$menu.class|default=''}"><a href="{$menu.url|U}">{$menu.title}</a></li>
+        </volist>
+    </ul>
+    <!-- /主导航 -->
+
+    <!-- 用户栏 -->
+    <div class="user-bar">
+        <a href="javascript:;" class="user-entrance"><i class="icon-user"></i></a>
+        <ul class="nav-list user-menu hidden">
+            <li class="manager">你好，<em title="{:session('user_auth.username')}">{:session('user_auth.username')}</em>
+            </li>
+            <li><a href="{:U('User/updatePassword')}">修改密码</a></li>
+            <li><a href="{:U('User/updateNickname')}">修改昵称</a></li>
+            <li><a href="{:U('Public/logout')}">退出</a></li>
+        </ul>
+    </div>
+    <div class="main-nav" style="float: right;margin-right: 30px;position: relative;"><a href="{:U('Shop/shopcart')}">购物车</a></div>
+</div>
+<!-- /头部 -->
+<!-- 内容区 -->
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">这是内容</div>
+    </div>
+    <div id="main" class="main">
+        <block name="nav">
+            <!-- nav -->
+            <notempty name="_show_nav">
+                <div class="breadcrumb">
+                    <span>您的位置:</span>
+                    <assign name="i" value="1"/>
+                    <foreach name="_nav" item="v" key="k">
+                        <if condition="$i eq count($_nav)">
+                            <span>{$v}</span>
+                            <else/>
+                            <span><a href="{$k}">{$v}</a>&gt;</span>
+                        </if>
+                        <assign name="i" value="$i+1"/>
+                    </foreach>
+                </div>
+            </notempty>
+            <!-- nav -->
+        </block>
+
+        <block name="body"></block>
+    </div>
+</div>
+
+<block name="script"></block>
+</body>
+</html>
+
+
+<block name="sidebar"></block>
+
+<block name="style">
+    <style>
+        body {
+            padding: 0
+        }
+    </style>
+</block>
+
+<block name="body">
+    <div id="indexMain" class="index-main">
+        <!--主体内容! -->
+        <div id="main" class="clear">
+            <!--产品的类别导航路径-->
+            <div class="bread-crumb">
+                <volist name="_class" id="vo" key="k">
+                    <a href="javascript:;">
+                        <if condition="$k eq 1"><b>{$vo.name}</b></if>
+                    </a><span>&gt;</span>
+                    <volist name="vo['class']" id="list">
+                        <a href="{:U('Index/shop_class?id='.$list['id'])}">{$list.name}</a>
+                    </volist>
+                </volist>
+
+                <!--<a href="javascript:;">清洁用品</a><span>&gt;</span>-->
+                <!--<a href="javascript:;">衣物清洁</a><span>&gt;</span>-->
+                <!--<a href="javascript:;">卫新</a><span>&gt;</span>-->
+
+            </div>
+            <!--产品简介-->
+            <div id="product_intro">
+                <div id="preview">
+                    <div id="mediumDiv">
+                        <if condition="$_goods_detail[0]['pic_1'] neq ''">
+                            <img id="mImg" src="{$_goods_detail[0]['pic_1']}"/>
+                        </if>
+                        <div id="mask"></div><!--半透明遮罩层-->
+                        <!--作为图片的全透明遮罩，专门处理鼠标事件！提高事件响应速度！-->
+                        <div id="superMask" onmouseover="showMask()" onmouseout="hideMask()" onmousemove="zoom()"></div>
+                    </div>
+                    <div id="largeDiv"></div>
+                    <h1>
+                        <a id="btnLeft" class="left" onclick="move(this)"></a>
+                        <a id="btnRight" class="right_disabled" onclick="move(this)"></a>
+                        <div>
+                            <ul id="icon_list">
+                                <if condition="$_goods_detail[0]['pic_1'] neq ''">
+                                    <li><img src="{$_goods_detail[0]['pic_1']}"/></li>
+                                </if>
+                                <if condition="$_goods_detail[0]['pic_2'] neq ''">
+                                    <li><img src="{$_goods_detail[0]['pic_2']}"/></li>
+                                </if>
+                                <if condition="$_goods_detail[0]['pic_3'] neq ''">
+                                    <li><img src="{$_goods_detail[0]['pic_3']}"/></li>
+                                </if>
+                                <if condition="$_goods_detail[0]['pic_4'] neq ''">
+                                    <li><img src="{$_goods_detail[0]['pic_4']}"/></li>
+                                </if>
+                                <if condition="$_goods_detail[0]['pic_5'] neq ''">
+                                    <li><img src="{$_goods_detail[0]['pic_5']}"/></li>
+                                </if>
+                            </ul>
+                        </div>
+                    </h1>
+                </div>
+                <h1><span>{$_goods.0.title}</span>
+                    <input type="hidden" class="goods_id" value="{$_goods.0.id}"/></h1>
+                <ul id="summary">
+                    <li id="summary_price">
+                        <div class="title">商&nbsp;城&nbsp;价：</div>
+                        <div class="content">
+                            <b>￥{$_goods.0.unit_price}</b>
+                            <a href="javascript:;">(降价通知)</a>
+                        </div>
+                    </li>
+                    <li id="summary_service">
+                        <div class="title">服&nbsp;&nbsp;务：</div>
+                        <div class="content">
+                            由 <span>第三方</span> 发货并提供售后服务。支持：
+                            <a class="sendpay_211" href="javascript:;"></a>
+                            <a class="jingdou_xiankuan" href="javascript:;"></a>
+                            <a class="special_ziti" href="javascript:;"></a>
+                        </div>
+                    </li>
+                </ul>
+                <ul id="choose">
+                    <li id="choose_amount">
+                        <div class="title">购买数量：</div>
+                        <div class="content">
+                            <a href="javascript:;" class="btn_reduce" id="reduce_01"></a>
+                            <input type="text" class="goods_num" value="1"/>
+                            <a href="javascript:;" class="btn_add" id="add_01"></a>
+                        </div>
+                    </li>
+                    <li id="choose_result">
+                    </li>
+                    <li id="choose_btns" class="clear">
+                        <a href="javascript:;" class="choose_btn_append"></a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--左侧浮动栏-->
+            <div id="left_product">
+                <!--相关分类-->
+                <div id="related_sorts">
+                    <div class="m_title">相关分类</div>
+                    <ul class="m_content">
+                        <volist name="_shop_detail" id="vo">
+                            <li><a href="{:U('Index/shop_class?id='.$vo['id'])}">{$vo.name}</a></li>
+                        </volist>
+                    </ul>
+                </div>
+                <!--最终购买-->
+                <div class="view_buy">
+                    <div class="m_title">浏览了该商品的用户最终购买</div>
+                    <ul class="m_content">
+                        <volist name="_list" id="vo">
+                            <li>
+                                <p><a href="{:U('Shop/index?id='.$vo['id'])}"><img src="{$vo.thumb}"/></a></p>
+                                <a href="{:U('Shop/index?id='.$vo['id'])}">{$vo.title}</a>
+                                <h2><a href="{:U('Shop/index?id='.$vo['id'])}">￥{$vo.unit_price}</a></h2>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+
+                <!--还购买了-->
+                <div class="view_buy">
+                    <div class="m_title">购买了该商品的用户还浏览了</div>
+                    <ul class="m_content">
+                        <volist name="_list" id="vo">
+                            <li>
+                                <p><a href="{:U('Shop/index?id='.$vo['id'])}"><img src="{$vo.thumb}"/></a></p>
+                                <a href="{:U('Shop/index?id='.$vo['id'])}">{$vo.title}</a>
+                                <h2><a href="{:U('Shop/index?id='.$vo['id'])}">￥{$vo.unit_price}</a></h2>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+
+                <!--其他-->
+                <ul id="left_shows">
+                    <!--<li>-->
+                        <!--<a><img src="images/left_p001.jpg"/></a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a><img src="images/left_p002.jpg"/></a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a><img src="images/left_p003.jpg"/></a>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+            <!--右侧产品信息-->
+            <div id="right_product">
+                <!--产品详细-->
+                <div id="product_detail">
+                    <!--页签-->
+                    <ul class="main_tabs">
+                        <li class="current"><a>商品介绍</a></li>
+                        <!-- <li><a href="#">商品评价(43390)</a></li> -->
+                        <li><a>售后保障</a></li>
+                    </ul>
+                    <!--商品介绍-->
+                    <div class="info_kuang">
+                        <div id="product_info" class="kuang">
+                            <ul class="detail_list">
+                                <li>商品名称：{$_goods_detail.0.commodity_name}</li>
+                                <li>商品编号：{$_goods_detail.0.id}</li>
+                                <li>品牌：{$_goods_detail.0.brand}</li>
+                                <li>上架时间：{$_goods_detail.0.created|time_format}</li>
+                                <li>商品净含量：{$_goods_detail.0.net_content}</li>
+                                <li>商品产地：{$_goods_detail.0.origin}</li>
+                                <li>类别：{$_goods_detail.0.type}</li>
+                                <li>规格：{$_goods_detail.0.specifications}</li>
+                                <li>香型：{$_goods_detail.0.flavor}</li>
+                            </ul>
+                            <div class="detail_correct"><b></b> 如果您发现商品信息不准确，<a href="javascript:;" target="_blank">欢迎纠错</a></div>
+                            <div class="detail_content" style="text-align:center;">
+                                {$_goods_detail.0.introduce}
+                            </div>
+                        </div>
+                        <!--商品评价-->
+                        <!-- <div id="evaluation"></div> -->
+                        <!--售后保障-->
+                        <div id="product_after" class="kuang">
+                            <h2>售后保障</h2>
+                            <!--厂家服务-->
+                            {$_goods_detail.0.describe}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</block>
+<div class="footer"></div>
+<script src="__PUBLIC__/mall/js/jquery-1.11.3.js"></script>
+<script src="__PUBLIC__/mall/js/details.js"></script>
+<script src="__PUBLIC__/mall/js/shopcart.js"></script>
+<script>
+    $(function () {
+        $('.main_tabs li').click(function () {
+            var index = $(this).index();
+            $(this).addClass('current').siblings().removeClass('current');
+            if (index == 1) {
+                $('.kuang').eq(index).show().siblings().hide();
+            } else {
+                $('.kuang').eq(index).show();
+            }
+        })
+        $('.gotop').click(function () {
+            window.scrollTo(0, 0);
+        })
+    })
+
+    $(".user-entrance").hover(function(){
+        $(".user-entrance").next().removeClass("hidden");
+    },function(){
+        $(".user-menu").hover(function(){
+            $(".user-menu").removeClass("hidden");
+        },function(){
+            $(".user-menu").addClass("hidden");
+        })
+        $(".user-entrance").next().addClass("hidden");
+    });
+</script>
+
+
+<link href="__PUBLIC__/kefu/css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="__PUBLIC__/kefu/js/jquery-1.8.3.min.js"></script>
+<script>
+    /*---------返回顶部----------*/
+    $(function() {
+        $(".btn_top").hide();
+        $(".btn_top").live("click",function(){
+            $('html, body').animate({scrollTop: 0},300);return false;
+        })
+        $(window).bind('scroll resize',function(){
+            if($(window).scrollTop()<=300){
+                $(".btn_top").hide();
+            }else{
+                $(".btn_top").show();
+            }
+        })
+    })
+
+
+    $(".user-entrance").hover(function(){
+        $(".user-entrance").next().removeClass("hidden");
+    },function(){
+        $(".user-menu").hover(function(){
+            $(".user-menu").removeClass("hidden");
+        },function(){
+            $(".user-menu").addClass("hidden");
+        })
+        $(".user-entrance").next().addClass("hidden");
+    });
+
+    /*---------返回顶部 end----------*/
+</script>
+
+
+<!--qq聊天代码部分begin-->
+<div class="izl-rmenu">
+    <a class="consult" target="_blank"><div class="phone" style="display:none;">010-1234567</div></a>
+    <!--<a class="cart"><div class="pic"></div></a>-->
+    <a href="javascript:void(0)" class="btn_top" style="display: block;"></a>
+</div>
+<a target="_blank"  href="http://wpa.qq.com/msgrd?v=3&uin=652290625&site=qq&menu=yes" id="udesk-feedback-tab" class="udesk-feedback-tab-left" style="display: block; background-color: black;"></a>
+<!--qq聊天代码部分end-->
+</body>
+</html>

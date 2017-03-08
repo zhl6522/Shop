@@ -1,0 +1,99 @@
+<extend name="Public/base"/>
+<block name="body">
+    <!--<link rel="stylesheet" type="text/css" href="__STATIC__/bootstrap/css/bootstrap.min.css" media="all">-->
+    <script type="text/javascript" src="__STATIC__/My97DatePicker/WdatePicker.js"></script>
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>销售排行</h2>
+
+    </div>
+    <!--<div class="fl">-->
+    <!--<from action="{:U('sort')}"  method="POST">-->
+    <!--<div class="control-group">-->
+    <!--<label class="control-label"><h4>时间:</h4></label>-->
+
+    <!--<div class="controls input-append date" data-link-field="dtp_input1">-->
+    <!--<input class="  Wdate time1" name="start" type="text" onClick="WdatePicker()" value="{:$start}">-->
+    <!--</div>-->
+    <!--<br>-->
+    <!--<a href="" class="btn btn-default">选择</a>-->
+    <!--</div>-->
+    <!--</from>-->
+
+    <!--</div>-->
+    <div class="cf">
+        <div class="fl">
+            <form action="{:U('sort')}" method="POST">
+                <div class="control-group">
+                    <label class="control-label"><h4>时间:</h4></label>
+                    <br>
+                    <div class="controls input-append date form_time" data-date="" data-date-format="yyyy-mm"
+                         data-link-field="dtp_input1">
+                        <input class="text Wdate time1" name="start" onClick="WdatePicker()" value="{:$start}">
+                    </div>
+                    <br>
+                    <input type="submit" class=" btn btn-default"><span>(提交时查询除了本月统计数据)</span>
+                </div>
+            </form>
+        </div>
+    </div>
+<!--{$arr_or_query}-->
+    <!-- 数据列表 -->
+    <div class="data-table table-striped">
+        <table class="">
+            <thead>
+            <tr>
+                <!--<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>-->
+                <th class="">编号</th>
+                <th class="">商品名称</th>
+                <th class="">商品销量</th>
+                <th class="">商品销售额</th>
+                <th class="">时间</th>
+
+                <!--<th class="">商品退换量</th>-->
+                <!--<th class="">商品退换率</th>-->
+
+            </tr>
+            </thead>
+            <tbody>
+            <notempty name="list">
+                <if condition="$arr_or_query eq 1 ">
+                    <volist name="list" id="vo">
+                        <notempty name="vo">
+                            <tr>
+                                <td>{$key}</td>
+                                <td>{$vo.title}</td>
+                                <td>{$vo.num}</td>
+                                <td>{$vo.sum}</td>
+                                <td>{$vo.month}</td>
+                            </tr>
+                        </notempty>
+                    </volist>
+                    <else/>
+                    <volist name="list" id="vo" offset="$be" length="10">
+                        <notempty name="vo">
+                            <tr>
+                                <td>{$key}</td>
+                                <td>{$vo.title}</td>
+                                <td>{$vo.num}</td>
+                                <td>{$vo.sum}</td>
+                                <td>{$vo.month}</td>
+                            </tr>
+                        </notempty>
+                    </volist>
+                </if>
+
+                <else/>
+                <td colspan="9" class="text-center"> 暂时还没有内容！</td>
+            </notempty>
+            </tbody>
+        </table>
+    </div>
+    <div class="page">
+        {:$page}
+    </div>
+</block>
+<block name="script">
+
+
+</block>

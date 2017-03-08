@@ -1,0 +1,63 @@
+<extend name="Public/base"/>
+<block name="body">
+	<form action="{:U()}" method="post" class="form-horizontal">
+		<input type = "hidden" name="id" value="{$data.id}">
+
+		<section>
+			<div class="container">
+				<div class="con_info">
+					<div class="con_1">
+						<p>修改返利比率</p>
+						<div class="con_one">
+							<div class="con_item">
+								<label>*等级名称：</label>
+								<div class="con_in">
+									{$data.return_name}
+								</div>
+							</div>
+							<div class="con_item">
+								<label>*等级积分满足条件值：</label>
+								<div class="con_in">
+									<input type="text" style="width: 82px;"  value = "{$data.source_value}" name="source_value">
+								</div>
+							</div>
+							<div class="con_item">
+								<label>*相应等级折扣返利：</label>
+								<div class="con_in">
+									<input type="text" style="width: 28px;" name="return_value"  value = "{$data.return_value}">%
+
+								</div>
+							</div>
+							<div class="con_item">
+								<label>*返利给上线折扣（创客返利给自己）：</label>
+								<div class="con_in">
+									<input type="text" style="width: 28px;" name="return_invite_user" value = "{$data.return_invite_user}">%
+
+								</div>
+							</div>
+
+							<div class="con_item">
+								<div class="form-item">
+									<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+									<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+
+
+
+	</form>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		//导航高亮
+		highlight_subnav('{:U('Finance/rebate')}');
+	</script>
+</block>
