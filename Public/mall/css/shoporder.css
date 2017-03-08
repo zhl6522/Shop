@@ -1,0 +1,110 @@
+.con_info{
+	width:1200px;
+	margin:20px auto;
+	border:1px solid #eee;
+}
+.con_info>h3{
+	font-size:16px;
+	padding:10px;
+}
+.con_address{
+	border:1px solid #ddd;
+}
+.con_add_title{
+	font-size:14px;
+	font-weight:bold;
+	padding:10px;
+}
+.con_add_title a{
+	color:#f00;
+	margin-left:50px;
+}
+.con_add_add{
+	padding:10px;
+}
+.con_add_add span{
+	color:#999;
+}
+.con_shop_list{
+	margin:50px 0 0px;
+}
+
+.con_shop_list h4{
+	font-size:14px;
+	padding:10px;
+	font-weight:bold;
+}
+
+/**********************************************/
+.con_shop_head{
+	background:#eee;
+	padding:10px;
+}
+.con_shop_head>div{
+	display:inline-block;
+	text-align: left;
+}
+.shop_h_title{
+	width:500px;
+}
+.con_shop_head .shop_h_price, .con_shop_head .shop_h_total,.con_shop_head .shop_h_attr,.con_shop_head .shop_h_num{
+	width:165px;
+	text-align: center;
+}
+/*确认订单信息等*/
+.shop_sec_info{
+	padding:10px;
+	border-style:solid;
+	border-width:2px 1px 0px;
+	border-color: #ddd ;
+}
+.shop_sec_info>div{
+	float:left;
+}
+.shop_sec_pic,.shop_sec_txt{
+	float:left;
+}
+.shop_sec_pic{
+/*	width:80px;
+	height:80px;*/
+	vertical-align: middle;
+	text-align: center;
+}
+.shop_sec_pic img{
+	width:50%;
+}
+.shop_sec_txt{
+	width:420px;
+	/*border:1px solid blue;*/
+}
+.shop_sec_attr,.shop_sec_price,.shop_sec_num,.shop_sec_total{
+	width:168px;
+	text-align: center;
+}
+/****************************提交订单******************************/
+.con_shop_foot{
+	border:1px solid #eee;
+	padding:10px 0;
+}
+.con_shop_foot p{
+	text-align: right;
+	padding:10px;
+}
+.con_shop_foot a{
+	background-color: #FD5913;
+	color:#fff;
+	padding:10px 20px;	
+	border-radius: 5px;
+	margin-left:10px;
+}
+
+
+
+.to_pay{
+	margin:0 10px;
+	padding:10px 20px;
+	border-radius: 5px;
+	border: 0;
+	background:#FD5913;
+	color:#fff;
+}

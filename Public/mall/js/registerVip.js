@@ -1,0 +1,12 @@
+$(function(){
+	//注册按钮
+	$('.register').click(function(){
+		$('.con_info:first-child').hide().next().show();
+		$('.thead_div:first-child').removeClass('thead_current').next().addClass('thead_current');
+	})
+	//提交认证按钮
+	$('.renzheng').click(function(){
+		$('.con_info:nth-child(2)').hide().next().show();
+		$('.thead_div:nth-child(2)').removeClass('thead_current').next().addClass('thead_current');
+	})
+})
