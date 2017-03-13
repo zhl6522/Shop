@@ -1,0 +1,67 @@
+.hovertree-tracklist ul li {
+list-style: none;
+}
+
+.hovertree-trackrcol {
+max-width: 900px;
+border: 1px solid #eee;
+}
+
+.hovertree-tracklist {
+margin: 20px;
+padding-left: 5px;
+position: relative;
+}
+
+.hovertree-tracklist li {
+position: relative;
+padding: 9px 0 0 25px;
+line-height: 18px;
+border-left: 1px solid #d9d9d9;
+color: #999;
+}
+
+.hovertree-tracklist li.first {
+color: red;
+padding-top: 0;
+border-left-color: #fff;
+}
+
+.hovertree-tracklist li .node-icon {
+position: absolute;
+left: -6px;
+top: 50%;
+width: 11px;
+height: 11px;
+background: url(http://hovertree.com/texiao/css/25/img/order-icons.png) -21px -72px no-repeat;
+}
+
+.hovertree-tracklist li.first .node-icon {
+background-position: 0 -72px;
+}
+
+.hovertree-tracklist li .time {
+margin-right: 20px;
+position: relative;
+top: 4px;
+display: inline-block;
+vertical-align: middle;
+}
+
+.hovertree-tracklist li .txt {
+max-width: 600px;
+position: relative;
+top: 4px;
+display: inline-block;
+vertical-align: middle;
+}
+
+.hovertree-tracklist li.first .time {
+margin-right: 20px;
+}
+
+.hovertree-tracklist li.first .txt {
+max-width: 600px;
+}
+.hovertreeinfo{margin-top:10px;}
+.hovertreeinfo a{color:blue;}
