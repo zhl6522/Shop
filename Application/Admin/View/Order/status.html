@@ -1,0 +1,44 @@
+<extend name="Public/base"/>
+<block name="style">
+    <link rel="stylesheet" href="__PUBLIC__/Admin/css/logitic.css">
+</block>
+<block name="body">
+    <div class="main-title">
+        <h2>物流跟踪</h2>
+    </div>
+    <div>
+        <div class="hovertree-trackrcol">
+        <div class="hovertree-tracklist">
+            <ul>
+                <!--<li class="first">-->
+                    <!--<i class="node-icon"></i>-->
+                    <!--<span class="time">2016-06-06 18:07:15</span>-->
+                    <!--<span class="txt">感谢您在何问起购物，欢迎您再次光临！</span>-->
+                <!--</li>-->
+
+
+                <notempty name="date">
+                    <volist name="date" id="vo">
+                        <li>
+                            <i class="node-icon"></i>
+                            <span class="time">{$vo["AcceptTime"]}</span>
+                            <span class="txt">{$vo["AcceptStation"]}</span>
+                        </li>
+                    </volist>
+                    <else/>
+                    <td colspan="9" class="text-center"> aOh! 暂时还没有内容! </td>
+                </notempty>
+
+
+            </ul>
+        </div>
+    </div>
+
+
+    </div>
+
+</block>
+
+<block name="script">
+
+</block>

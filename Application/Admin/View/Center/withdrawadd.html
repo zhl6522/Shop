@@ -1,0 +1,58 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>提现申请</h2>
+    </div>
+    <form action="{:U('withdrawadd')}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">用户编码<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="vip_code" value="{$data.vip_code}" required readonly style="background: #ededed;">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">提现额度<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="score" value="" required placeholder="请输入提现额度">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">开户银行<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="bank" value="{$data.card_blank}" required placeholder="请输入开户银行">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">开户人<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="bank_name" value="{$data.card_name}" required placeholder="请输入开户人名">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">银行卡号<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="bank_code" value="{$data.card_num}" required placeholder="请输入银行卡号">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">用户手机号<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="phone" value="{$data.telphone}" required placeholder="请输入用户手机号">
+            </div>
+        </div>
+
+
+        <div class="form-item">
+            <button class="btn submit-btn" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('{:U('Center/withdrawadd')}');
+    </script>
+</block>

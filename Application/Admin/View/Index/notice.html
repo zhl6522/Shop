@@ -1,0 +1,86 @@
+<extend name="Public/base" />
+
+<block name="body">
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>公告管理</h2>
+    </div>
+    <div class="cf">
+        <div class="fl">
+            <a class="btn" href="javascript:;addnotice()">新 增</a>
+        </div>
+
+        <!-- 高级搜索 -->
+        <!--<div class="search-form fr cf">-->
+        <!--<div class="sleft">-->
+        <!--<input type="text" name="nickname" class="search-input" value="{:I('nickname')}" placeholder="请输入用户昵称或者ID">-->
+        <!--<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+    <form action = "{:U('notice')}" method = "post">
+    <!-- 数据列表 -->
+    <div class="data-table table-striped">
+        <table class="">
+            <thead>
+            <tr>
+                <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                <th class="">排序</th>
+                <th class="">内容</th>
+            </tr>
+            </thead>
+            <tbody id = "notice">
+                <volist name="_list" id="vo">
+                    <tr>
+                        <td><input class="ids" type="checkbox" /></td>
+                        <td><input type = "text" name = 'listorder[]' placeholder='排序号' class='text input-large' style='width:50px;' value="{$vo.listorder}"></td>
+                        <td><input type = "text" name = 'title[]' placeholder='请输入公告内容' class='text input-large' style='width:70%;' value="{$vo.title}"></td>
+                    </tr>
+                </volist>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-item">
+        <button class="btn submit-btn " id="submit" type="submit">确 定</button>
+    </div>
+    <form>
+</block>
+
+<block name="script">
+    <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+
+    <script type="text/javascript">
+        //搜索功能
+        $("#search").click(function(){
+            var url = $(this).attr('url');
+            var query  = $('.search-form').find('input').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+            query = query.replace(/^&/g,'');
+            if( url.indexOf('?')>0 ){
+                url += '&' + query;
+            }else{
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+        //回车搜索
+        $(".search-input").keyup(function(e){
+            if(e.keyCode === 13){
+                $("#search").click();
+                return false;
+            }
+        });
+        //导航高亮
+        highlight_subnav('{:U('User/index')}');
+
+        function addnotice(){
+            var html = "";
+            html +="<tr><td><input class='ids' type='checkbox'/></td>";
+            html +="<td><input type = 'text' name = 'listorder[]' placeholder='序列号' value='0' class='text input-large' style='width:50px;'></td>";
+            html +="<td><input type = 'text' name = 'title[]' placeholder='请输入公告内容' class='text input-large' style='width:70%;' ></td>";
+            html +="</tr>";
+            $("#notice").append(html);
+        }
+
+    </script>
+</block>

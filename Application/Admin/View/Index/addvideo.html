@@ -1,0 +1,118 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>视屏添加</h2>
+    </div>
+    <form action="{:U('addvideo')}" method="post" class="form-horizontal" enctype="multipart/form-data" >
+        <div class="form-item">
+            <label class="item-label">视频分类<span class="check-tips"></span></label>
+            <div class="controls">
+                <select name = "type">
+                    <volist name = "shop_class" id = "vo">
+                        <option  value = "{$vo.id}">{$vo.name}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">视频标题<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="title" value="" required placeholder="请输入视频标题">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">视频描述<span class="check-tips"></span></label>
+            <div class="controls">
+                <textarea name = 'description' style="width:400px;height:150px;" requiredplaceholder="请输入视频描述"></textarea>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">视频代码<span class="check-tips"></span></label>
+            <div class="controls">
+                <textarea name = 'description' style="width:400px;height:150px;" requiredplaceholder="请输入视频代码"></textarea>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">视频封面<span class="check-tips"></span></label>
+            <div class="controls">
+                <input id="file_0" type="file" name="thumb_path">
+                <div class="mark_0"></div>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">排序<span class="check-tips"></span>（值越大越靠前）</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="listorder" value="0">
+            </div>
+        </div>
+
+        <div class="form-item">
+            <button class="btn submit-btn " id="submit" type="submit">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('{:U('User/index')}');
+    </script>
+
+
+    <script type="text/javascript" >
+        $(function(){
+            var date = new Date();
+            $("#locationyear").val(date.getFullYear().toString().substr(2,2));
+            $("#locationmonth").val(date.getMonth()+1);
+        })
+
+        //获取上传图片地址
+        function getImgURL(node) {
+            var imgURL = "";
+            try{
+                var file = null;
+                if(node.files && node.files[0] ){
+                    file = node.files[0];
+                }else if(node.files && node.files.item(0)) {
+                    file = node.files.item(0);
+                }
+                //Firefox 因安全性问题已无法直接通过input[file].value 获取完整的文件路径
+                try{
+                    //Firefox7.0
+                    imgURL =  file.getAsDataURL();
+                    //alert("//Firefox7.0"+imgRUL);
+                }catch(e){
+                    //Firefox8.0以上
+                    imgRUL = window.URL.createObjectURL(file);
+                    //alert("//Firefox8.0以上"+imgRUL);
+                }
+            }catch(e){      //这里不知道怎么处理了，如果是遨游的话会报这个异常
+                //支持html5的浏览器,比如高版本的firefox、chrome、ie10
+                if (node.files && node.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        imgURL = e.target.result;
+                    };
+                    reader.readAsDataURL(node.files[0]);
+                }
+            }
+            //imgurl = imgURL;
+            // creatImg(imgRUL);
+            console.log(imgRUL);
+            // console.log("imgURL:"+imgURL);
+            return imgRUL;
+            // return imgURL;
+        }
+
+        $(function(){
+            // var session_id=sessionStorage.getItem('session_id');
+            // $('#hidden').val(session_id);
+            var imgurl = "";
+            $('#file_0').change(function(e){
+                $('.mark_0').html('<img src="'+getImgURL(this)+'" style="width:200px;height:200px;"/>');
+            })
+        })
+    </script>
+</block>

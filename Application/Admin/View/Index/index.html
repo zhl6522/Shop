@@ -1,0 +1,444 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$meta_title}</title>
+    <!-- <link href="__ROOT__/Public/favicon.ico" type="image/x-icon" rel="shortcut icon"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="__CSS__/base.css" media="all"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="__CSS__/common.css" media="all"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="__CSS__/module.css"> -->
+    <link rel="stylesheet" type="text/css" href="__CSS__/style.css?123" media="all">
+    <!--     <link rel="stylesheet" type="text/css" href="__CSS__/{$Think.config.COLOR_STYLE}.css" media="all"> -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <![endif]--><!--[if gte IE 9]><!-->
+    <!--<![endif]-->
+    <script type="text/javascript" src="__STATIC__/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.mousewheel.js"></script>
+    <block name="style"></block>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<!-- 头部 -->
+<div class="header">
+    <!-- Logo -->
+    <span class="logo_1"></span>
+    <!-- /Logo -->
+
+    <!-- 主导航 -->
+    <ul class="main-nav">
+        <volist name="__MENU__.main" id="menu">
+            <li class="{$menu.class|default=''}"><a href="{$menu.url|U}">{$menu.title}</a></li>
+        </volist>
+    </ul>
+    <!-- /主导航 -->
+
+    <!-- 用户栏 -->
+    <div class="user-bar">
+        <a href="javascript:;" class="user-entrance"><i class="icon-user"></i></a>
+        <ul class="nav-list user-menu hidden">
+            <li class="manager">你好，<em title="{:session('user_auth.username')}">{:session('user_auth.username')}</em>
+            </li>
+            <li><a href="{:U('User/updatePassword')}">修改密码</a></li>
+            <li><a href="{:U('User/updateNickname')}">修改昵称</a></li>
+            <li><a href="{:U('Public/logout')}">退出</a></li>
+        </ul>
+    </div>
+    <div class="main-nav" style="float: right;margin-right: 30px;position: relative;"><a href="{:U('Shop/shopcart')}">购物车</a>
+    </div>
+</div>
+<!-- /头部 -->
+
+<!-- 边栏 -->
+<div class="sidebar">
+    <!-- 子导航 -->
+    <block name="sidebar">
+        <div id="subnav" class="subnav">
+            <notempty name="_extra_menu">
+                {// 动态扩展菜单 //}
+                {:extra_menu($_extra_menu,$__MENU__)}
+            </notempty>
+            <volist name="__MENU__.child" id="sub_menu">
+                <!-- 子导航 -->
+                <notempty name="sub_menu">
+                    <notempty name="key"><h3><i class="icon icon-unfold"></i>{$key}</h3></notempty>
+                    <ul class="side-sub-menu">
+                        <volist name="sub_menu" id="menu">
+                            <li>
+                                <a class="item" href="{$menu.url|U}">{$menu.title}</a>
+                            </li>
+                        </volist>
+                    </ul>
+                </notempty>
+                <!-- /子导航 -->
+            </volist>
+        </div>
+    </block>
+    <!-- /子导航 -->
+</div>
+<!-- /边栏 -->
+
+<!-- 内容区 -->
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">这是内容</div>
+    </div>
+    <div id="main" class="main">
+        <block name="nav">
+            <!-- nav -->
+            <notempty name="_show_nav">
+                <div class="breadcrumb">
+                    <span>您的位置:</span>
+                    <assign name="i" value="1"/>
+                    <foreach name="_nav" item="v" key="k">
+                        <if condition="$i eq count($_nav)">
+                            <span>{$v}</span>
+                            <else/>
+                            <span><a href="{$k}">{$v}</a>&gt;</span>
+                        </if>
+                        <assign name="i" value="$i+1"/>
+                    </foreach>
+                </div>
+            </notempty>
+            <!-- nav -->
+        </block>
+
+        <block name="body"></block>
+    </div>
+</div>
+
+<block name="script"></block>
+</body>
+</html>
+
+
+<block name="sidebar"></block>
+
+<block name="style">
+    <style>
+        body {
+            padding: 0
+        }
+    </style>
+</block>
+
+<block name="body">
+    <!-- 主体 -->
+    <div id="indexMain" class="index-main">
+
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8"/>
+            <title></title>
+            <link rel="stylesheet" href="__PUBLIC__/mall/css/reset.css"/>
+            <link rel="stylesheet" href="__PUBLIC__/mall/css/header.css">
+            <link rel="stylesheet" href="__PUBLIC__/mall/css/index.css">
+            <script src="__PUBLIC__/mall/js/jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+            <script src="__PUBLIC__/mall/js/index.js"></script>
+        </head>
+        <body>
+        <div class="head"></div>
+        <div class="con">
+            <div id="header">
+                <h1 id="logo"><a href="#"><img src="__PUBLIC__/mall/images/logo.jpg" alt="" style="width:100%;"></a>
+                </h1>
+                <div id="search">
+                    <div id="search_main">
+                        <div id="search_kuang">
+                            <form action="{:U('Index/search')}" method="POST">
+                                <input type="text" name="nickname" class="s_text" placeholder="搜商品"/>
+                                <input type="submit" value="搜索" class="s_btns"/>
+                            </form>
+                        </div>
+                        <div id="search_pop">
+                            <ul>
+                                <li>
+                                    <a href="#">卫<strong>衣</strong></a>
+                                    <span>约1200个商品</span>
+                                </li>
+                                <ul class="sub_pop">
+                                    <li>
+                                        <a href="#">在<b>男装&gt;卫衣</b>分类中搜索</a>
+                                        <span>约120330个商品</span>
+                                    </li>
+                                    <li>
+                                        <a href="#">在<b>女装&gt;卫衣</b>分类中搜索</a>
+                                        <span>约322200个商品</span>
+                                    </li>
+                                </ul>
+                                <li>
+                                    <a href="#">卫<strong>新</strong></a>
+                                    <span>约1200个商品</span>
+                                </li>
+                                <li>
+                                    <a href="#">卫<strong>生纸</strong></a>
+                                    <span>约1200个商品</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="hot_words">
+                        <!--<h4>热门搜索：</h4>-->
+                        <!--<ul>-->
+                        <!--<li><a href="#">家纺11月大促</a></li>-->
+                        <!--<li><a href="#">彩虹电热毯</a></li>-->
+                        <!--<li><a href="#">博洋家纺</a></li>-->
+                        <!--<li><a href="#">霞珍</a></li>-->
+                        <!--<li><a href="#">床垫床褥</a></li>-->
+                        <!--<li><a href="#">九州鹿被子</a></li>-->
+                        <!--<li><a href="#">南极人家纺</a></li>-->
+                        <!--</ul>-->
+                    </div>
+                </div>
+                <!-- <div class="hd_btns">
+                       <a href="#" class="my_jd">我的京东<i></i></a>
+                       <a href="#" class="shop_cart">去购物车结算<i></i></a>
+                </div> -->
+            </div>
+            <div class="out_kuang clear">
+                <div class="out_first">
+                    <div class="out_first_tab">
+                        <volist name="_menus" id="vo">
+                            <div class="cate_line">
+                                <a href="">{$vo.name}</a>
+                            </div>
+                        </volist>
+                    </div>
+
+                    <div class="out_first_con">
+                        <volist name="_menus" id="vo">
+                            <div class="cate_sub_line">
+
+                                <dl class="cate_detail clear">
+                                    <dt class="cate_dt"><a href="javascript:;">{$vo.name}</a></dt>
+                                    <dd class="cate_dd">
+                                        <volist name="vo.shop" id="list">
+                                            <a href="{:U('Index/shop_class?id='.$list['id'])}">{$list.name}</a>
+                                            <if condition="$list['is_last'] neq 1">|</if>
+                                        </volist>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </volist>
+                    </div>
+                </div>
+                <div class="out_second" id="focus">
+                    <ul>
+                        <volist name="_picture" id="vo">
+                            <li>
+                                <div style="left:0; top:0; width:780px; height:380px;"><img
+                                        src="{$vo.thumb}" alt=""/></div>
+
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+
+                <div class="out_third">
+                    <div class="welcome clear">
+                        <div class="wel_pic">
+                            <a href="#">
+                                <img src="__PUBLIC__/mall/images/no_login.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="wel_txt">
+                            Hi {$info.nickname}! 欢迎进入苏荷官方网站
+                        </div>
+                        <div class="wel_login">
+                            <!-- <a href="login.html">登录</a> -->
+                            <!--<a href="login.html">Vip注册</a>-->
+                        </div>
+                    </div>
+                    <div class="gonggao">
+                        <div class="gonggao_tit">
+                            <p>公告</p>
+                            <div class="gonggao_content">
+                                <volist name = "listnotice" id = "vo">
+                                <p style="padding: 10px;"><a href="">{$vo.title}</a></p>
+                                </volist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="out_three">
+                <h2>商品推荐</h2>
+                <ul class="haohuo_list clear">
+                    <notempty name="_list">
+                        <volist name="_list" id="vo">
+                            <li>
+
+                                    <a href="{:U('Shop/index?id='.$vo['id'])}"><dd><img src="{$vo.thumb}" alt="" style="width: 220px;height: 220px;"></dd></a>
+                                    <dt>
+                                        <a href="{:U('Shop/index?id='.$vo['id'])}"><p>{$vo.title}</p></a>
+                                    <p class="haohuo_price"><a href="{:U('Shop/index?id='.$vo['id'])}">￥{$vo.unit_price}</a>
+                                        <object><button class="addShop buy_btn_append" value="{$vo['id']}">加入购物车</button></object>
+                                    </p>
+                                    </dt>
+                            </li>
+                        </volist>
+                        <else/>
+                        <td colspan="9" class="text-center"> aOh! 暂时还没有内容!</td>
+                    </notempty>
+                </ul>
+            </div>
+            <p><a href="{:U('Index/video')}"><img src="__PUBLIC__/mall/images/header_tu1.jpg"></a></p>
+            <div class="out_four">
+                <h2>套餐精选</h2>
+                <!-- <div id="taocan_jingxuan"><p>套餐精选</p></div> -->
+                <div class="taocan">
+                    <ul class="taocan_tab clear">
+                        <notempty name="_package">
+                            <volist name="_package" id="vo" key="k">
+                                <if condition="$k eq 1">
+                                    <li class="tab_cur">{$vo.name}</li>
+                                    <else/>
+                                    <li>{$vo.name}</li>
+                                </if>
+
+                            </volist>
+                            <else/>
+                            <td colspan="9" class="text-center"> aOh! 暂时还没有内容!</td>
+                        </notempty>
+
+                    </ul>
+                    <div class="taocan_detail">
+                        <notempty name="_package">
+                            <volist name="_package" id="vo" key="k">
+                                <if condition="$k eq 1">
+                                    <div class="sub_content ">
+                                        <else/>
+                                        <div class="sub_content isHide">
+                                </if>
+                                <ul class="suits clear">
+                                    <volist name="vo.goods" id="list">
+                                        <li>
+                                                <span>
+                                                    </span>
+                                            <a href="{:U('Shop/index?id='.$list['id'])}">
+                                                <img src="{$list.thumb}"/></a>
+                                            <p><a href="{:U('Shop/index?id='.$list['id'])}">{$list.title}</a></p>
+                                            <a href="{:U('Shop/index?id='.$list['id'])}"><p class="haohuo_price">
+                                                单价：{$list.unit_price}元</p></a>
+                                        </li>
+                                    </volist>
+                                </ul>
+                                <div class="goto_pay">
+                                    <form action="{:U('Shop/package_order')}" method="POST">
+                                        
+                                            <input type="hidden" name="package_id" value="{$vo.id}">
+                                            <span class="old_price">原价：<s>{$vo.package_price}</s></span>
+                                           <span id="dise_color">
+                                            <span class="new_price">超值套餐价：<b>{$vo.package_prices}</b></span>
+                                        </span>
+                                        
+                                        <input class="to_pay" type="submit" value="立即购买">
+                                    </form>
+                                </div>
+                    </div>
+                    </volist>
+                    <else/>
+                    <td colspan="9" class="text-center"> aOh! 暂时还没有内容!</td>
+                    </notempty>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+            <div class="copy " style="line-height: 30px;">
+                苏ICP备17012969号-1 | 版权所有：南京苏荷环保科技有限公司 <br>
+                网站地址：www.suhelife.com  |
+                公司地址：南京市浦口区江浦街道浦口大街1号新城总部大厦1615室 
+
+                <!--北京市公安局朝阳分局备案编号110105014669 | 京ICP证070359号 | 互联网药品信息服务资格证编号(京)-非经营性-2011-0034<br>-->
+         <!--<a href="#">音像制品经营许可证苏宿批005号</a> | 出版物经营许可证编号新出发(苏)批字第N-012号 | 互联网出版许可证编号新出网证(京)字150号<br>-->
+         <!--<a href="#">网络文化经营许可证京网文[2011]0168-061号</a> Copyright © 2004-2014 京东JD.com 版权所有<br>-->
+         <!--旗下网站： <a href="#">English Site</a> <a href="#">拍拍网</a> <a href="#">网银在线</a>-->
+         </div>
+    </div>
+
+    <link href="__PUBLIC__/kefu/css/style.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="__PUBLIC__/kefu/js/jquery-1.8.3.min.js"></script>
+    <script>
+        /*---------返回顶部----------*/
+        $(function () {
+            $(".btn_top").hide();
+            $(".btn_top").live("click", function () {
+                $('html, body').animate({scrollTop: 0}, 300);
+                return false;
+            })
+            $(window).bind('scroll resize', function () {
+                if ($(window).scrollTop() <= 300) {
+                    $(".btn_top").hide();
+                } else {
+                    $(".btn_top").show();
+                }
+            })
+        })
+
+        /*---------返回顶部 end----------*/
+    </script>
+
+    <!--qq聊天代码部分begin-->
+    <div class="izl-rmenu">
+     <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=959941555&site=qq&menu=yes" id="udesk-feedback-tab1"       class="udesk-feedback-tab-left" style="display: block; background-color: black;"></a>
+
+  <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=41113347&site=qq&menu=yes" class="consult2"  id="udesk-feedback-tab2" ></a>
+        <a class="consult" target="_blank">
+            <div class="phone" style="display:none;">400-8828-206</div>
+        </a>
+        <a class="cart"><div class="pic"></div></a>
+        <a href="javascript:void(0)" class="btn_top" style="display: block;"></a>
+    </div>
+   
+    <!--qq聊天代码部分end-->
+    </body>
+    </html>
+
+
+    </div>
+</block>
+<!--<div class="cont-ft">-->
+<!--<div class="copyright">-->
+<!--<div class="fl">感谢使用<a href="http://www.onethink.cn" target="_blank">OneThink</a>管理平台</div>-->
+<!--<div class="fr">V{$Think.const.ONETHINK_VERSION}</div>-->
+<!--</div>-->
+<!--</div>-->
+<block name="script">
+    <script type="text/javascript">
+        /* 插件块关闭操作 */
+        $(".title-opt .wm-slide").each(function () {
+            $(this).click(function () {
+                $(this).closest(".columns-mod").find(".bd").toggle();
+                $(this).find("i").toggleClass("mod-up");
+            });
+        })
+        $(function () {
+            // $('#main').attr({'id': 'indexMain','class': 'index-main'});
+            //$('.copyright').html('<div class="copyright"> ©2013 <a href="http://www.topthink.net" target="_blank">topthink.net</a> 上海顶想信息科技有限公司版权所有</div>');
+            $('.sidebar').remove();
+
+        })
+
+        $(".user-entrance").hover(function () {
+            $(".user-entrance").next().removeClass("hidden");
+        }, function () {
+            $(".user-menu").hover(function () {
+                $(".user-menu").removeClass("hidden");
+            }, function () {
+                $(".user-menu").addClass("hidden");
+            })
+            $(".user-entrance").next().addClass("hidden");
+        });
+    </script>
+</block>
+

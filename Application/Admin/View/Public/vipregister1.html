@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Vip用户注册</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link rel="stylesheet" href="__PUBLIC__/mall/css/reset.css">
+<link rel="stylesheet" href="__PUBLIC__/mall/css/registerVip.css">
+<script src="__PUBLIC__/mall/js/jquery-1.11.3.js"></script>
+<script src="__PUBLIC__/mall/js/registerVip.js"></script>
+</head>
+<body>
+	<section>
+	    	<div class="thead clear">
+	    		<div class="thead_div">
+	    			<div class="thead_xuhao">
+	    				01
+	    			</div>
+	    			<div class="thead_txt">
+	    				<p class="thead_tit">填写信息提交注册侧</p>
+	    				<p class="thead_tip">请确保填写信息真实有效，提交成功后即可登录自然生活服务平台</p>
+	    			</div>
+	    		</div>
+	    		<div class="thead_div thead_current">
+	    			<div class="thead_xuhao">
+	    				02
+	    			</div>
+	    			<div class="thead_txt">
+	    				<p class="thead_tit">登录平台完成认证</p>
+	    				<p class="thead_tip">登录平台进行真实信息认证及套餐的订单支付</p>
+	    			</div>
+	    		</div>
+	    		<div class="thead_div">
+	    			<div class="thead_xuhao">
+	    				03
+	    			</div>
+	    			<div class="thead_txt">
+	    				<p class="thead_tit">接受奖励认证</p>
+	    				<p class="thead_tip">选择不同套餐对应服务并请仔细阅读套餐说明</p>
+	    			</div>
+	    		</div>
+	    	</div>
+
+				<!--第二步-->
+			<form action = "{:U('vipRegister1')}" method = "post" enctype="multipart/form-data">
+	    		<div class="con_info" style="">
+					<h2>恭喜您注册成功！请完善您的认证信息！</h2>
+	    			<div class="con_1">
+	    				<p>实名认证<span>（认证成功后会增加您的信誉度）</span></p>
+	    				<div class="con_two">
+	    					<div class="con_left">
+	    						<div class="con_pic" id = "mark_0">
+	    							<img src="__PUBLIC__/mall/images/product-s4-m.jpg" alt="">
+	    						</div>
+	    						<p class="upload_p"><input style="opacity:0" type="file" name="id_num_thumb" value="上传照片" id = "file_0"><a href="javascript:;" id ="file_upload">上传照片</a></p>
+	    					</div>
+	    					<div class="con_left">
+	    						<div class="con_pic">
+	    							<img src="__PUBLIC__/mall/images/shili.png" alt="">
+	    						</div>
+	    						<p>上传示例</p>
+	    					</div>
+	    				</div>
+	    				<p class="tip">实名认证需要同时上传一张手持身份证的人证合影,请确保您的照片清明，照片不能涂改以及遮挡。</p>
+	    			</div>
+
+
+	    			<div class="con_1">
+	    				<p>套餐选择<span>（以下信息是套餐选择内容，可帮助您选择套餐类型）</span></p>
+	    				<div class="con_two">
+	    					<ul class="con_taocan clear">
+	    						<li style="width:800px;">
+				    				<a href="#">
+				    					<!--<dd><img src="/Public/mall/images/product-s4-m.jpg" alt=""></dd>-->
+				    					<dd><img src="{$data.thumb}" alt="" style="width:800px;"></dd>
+									<dt>
+										<p>{$data.name}--{$data.title}</p>
+										<p class="taocan_price">会员特价：<span>￥{$data.package_price}</span></p>
+									</dt>
+				    				</a>	
+				    			</li>
+	    						
+	    					</ul>
+	    					<ul class="con_radio clear">
+									<li><input type="radio" name="package_id" value="{$data.id}" checked>{$data.name}</li>
+	    					</ul>
+						
+						<p class="renzheng"><input type = 'submit' value="提交认证" style="background: #fd5913 none repeat scroll 0 0;color: #fff;font-size: 16px;padding: 10px 20px;text-align: center;"></p>
+	    				</div>
+	    				
+	    			</div>
+
+	    			
+	    		</div>
+			</form>
+	    	</div>
+
+	</section>
+</body>
+</html>
+
+
+<script type="text/javascript" >
+    $(function(){
+        var date = new Date();
+        $("#locationyear").val(date.getFullYear().toString().substr(2,2));
+        $("#locationmonth").val(date.getMonth()+1);
+    })
+
+    //获取上传图片地址
+    function getImgURL(node) {
+        var imgURL = "";
+        try{
+            var file = null;
+            if(node.files && node.files[0] ){
+                file = node.files[0];
+            }else if(node.files && node.files.item(0)) {
+                file = node.files.item(0);
+            }
+            //Firefox 因安全性问题已无法直接通过input[file].value 获取完整的文件路径
+            try{
+                //Firefox7.0
+                imgURL =  file.getAsDataURL();
+                //alert("//Firefox7.0"+imgRUL);
+            }catch(e){
+                //Firefox8.0以上
+                imgRUL = window.URL.createObjectURL(file);
+                //alert("//Firefox8.0以上"+imgRUL);
+            }
+        }catch(e){      //这里不知道怎么处理了，如果是遨游的话会报这个异常
+            //支持html5的浏览器,比如高版本的firefox、chrome、ie10
+            if (node.files && node.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imgURL = e.target.result;
+                };
+                reader.readAsDataURL(node.files[0]);
+            }
+        }
+        //imgurl = imgURL;
+        // creatImg(imgRUL);
+        console.log(imgRUL);
+        // console.log("imgURL:"+imgURL);
+        return imgRUL;
+        // return imgURL;
+    }
+
+    $(function(){
+        var imgurl = "";
+        $('#file_0').change(function(e){
+            $('#mark_0').html('<img src="'+getImgURL(this)+'" />');
+        })
+
+		$("#file_upload").click(function(){
+		    $("#file_0").trigger("click");
+		})
+    })
+</script>

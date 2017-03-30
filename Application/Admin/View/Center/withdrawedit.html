@@ -1,0 +1,67 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>提现申请</h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+        <input type="hidden" name="id" value="{$data.id}">
+        <div class="form-item">
+            <label class="item-label">VIP编号<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="vip_code" value="{$data.vip_code}" required>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">提现额度<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="score" value="{$data.score}" required>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">开户银行<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="bank" value="{$data.bank}" required>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">开户人<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="bank_name" value="{$data.bank_name}" required>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">银行卡号<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="bank_code" value="{$data.bank_code}" required>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">用户手机号<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="phone" value="{$data.phone}" required>
+            </div>
+        </div>
+
+        <div class="form-item">
+            <label class="item-label">审核状态<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="radio"  name="status" value="0" <if condition = "$data.status eq 0">checked</if>>待审核&nbsp;&nbsp;
+                <input type="radio"  name="status" value="1" <if condition = "$data.status eq 1">checked</if>>已审核
+            </div>
+        </div>
+
+
+        <div class="form-item">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('{:U('Center/withdrawadd')}');
+    </script>
+</block>
