@@ -18,8 +18,8 @@ class QiniuController extends AdminController {
 
     public function _initialize(){
         $config = array(
-            'accessKey'=>'__ODsglZwwjRJNZHAu7vtcEf-zgIxdQAY-QqVrZD',
-            'secrectKey'=>'Z9-RahGtXhKeTUYy9WCnLbQ98ZuZ_paiaoBjByKv',
+            'accessKey'=>'__ODsglZwwjRJNZHAu7vtcEf-***-QqVrZD',
+            'secrectKey'=>'Z9-***',
             'bucket'=>'blackwhite',
             'domain'=>'blackwhite.u.qiniudn.com'
         );
