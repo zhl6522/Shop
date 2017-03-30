@@ -40,10 +40,10 @@ return array(
     /* 数据库配置 */
     'DB_TYPE'   => 'mysqli', // 数据库类型
     //'DB_HOST'   => 'localhost', // 服务器地址
-    'DB_HOST'   => '103.235.232.91', // 服务器地址
+    'DB_HOST'   => '103.235.*.*', // 服务器地址
     'DB_NAME'   => 'ten', // 数据库名
     'DB_USER'   => 'ten', // 用户名
-    'DB_PWD'    => 'ten@zhl123456',  // 密码
+    'DB_PWD'    => 'ten@**',  // 密码
     'DB_PORT'   => '3306', // 端口
     'DB_PREFIX' => 'pre_', // 数据库表前缀
 
