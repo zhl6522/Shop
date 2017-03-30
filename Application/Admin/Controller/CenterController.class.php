@@ -117,20 +117,20 @@ class CenterController extends AdminController
         $cancel_url = $_SERVER['SERVER_NAME']."/Admin/Center/cancelPay";
         $order = time().rand(0000,9999);
         require_once('pingpp/init.php');
-        \Pingpp\Pingpp::setApiKey('sk_live_q5ijHOGun9m9Wn5qPKmj1u58');
+        \Pingpp\Pingpp::setApiKey('**********');
         \Pingpp\Pingpp::setPrivateKeyPath('/data/develop/php/zhl.code/rsa_private_key.pem');
         $json =  \Pingpp\Charge::create(array('order_no'  => $order,
                 'amount'    => $score,//订单总金额, 人民币单位：分（如订单总金额为 1 元，此处请填 100）
                 'app'       => array('id' => 'app_48qPK8er9Gq1zPWT'),
                 'channel'   => 'alipay_pc_direct',
                 'currency'  => 'cny',
-                'client_ip' => '103.235.232.91',
+                'client_ip' => '103.235.**.**',
                 'subject'   => '会员充值',
                 'body'      => '会员充值',
                 'extra'=>array(
                     'success_url'=>$success_url,
 //                    'enable_anti_phishing_key '=>'',
-//                    'exter_invoke_ip '=>'103.235.232.91',
+//                    'exter_invoke_ip '=>'103.235.**.**',
                 ))
         );
 
